@@ -14,7 +14,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -26,7 +26,10 @@ namespace API
             try
             {
                 var context = services.GetRequiredService<DataContext>();
-                context.Database.Migrate();
+                await context.Database.MigrateAsync();
+                //We sent context to SeedData method to check if any record exist in table. 
+                //If not seed data will be inserted in table.
+                await Seed.SeedData(context);
             }
             //Throw error if any error occured during migration
             catch (System.Exception ex)
@@ -37,7 +40,7 @@ namespace API
             }
             
             //if everything is ok then run the application
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
