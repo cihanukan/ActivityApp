@@ -43,7 +43,7 @@ namespace API
             // we allowed to client that access to any method of our api
             services.AddCors(opt=>{
                 opt.AddPolicy("CorsPolicy", policy=>{
-                    policy.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
         }
