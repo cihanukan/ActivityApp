@@ -1,37 +1,38 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react";
-import { Activity } from "../../../models/activity";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-  activity: Activity;
-  cancelSelectActivity: () => void;
-  openForm: (id: string) => void;
-}
+function ActivityDetails() {
+  const { activityStore } = useStore();
+  const { openForm, selectedActivity, cancelSelectedActivity } = activityStore;
 
-function ActivityDetails({ activity, cancelSelectActivity, openForm }: Props) {
+  if (!selectedActivity) return <LoadingComponent />;
+
   return (
     <Card fluid>
-      <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
+      <Image src={`/assets/categoryImages/${selectedActivity.category}.jpg`} />
       <Card.Content>
-        <Card.Header>{activity.title}</Card.Header>
+        <Card.Header>{selectedActivity.title}</Card.Header>
         <Card.Meta>
-          <span>{activity.date}</span>
+          <span>{selectedActivity.date}</span>
         </Card.Meta>
-        <Card.Description>{activity.description}</Card.Description>
+        <Card.Description>{selectedActivity.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths="2">
           <Button
             color="blue"
-            onClick={() => openForm(activity.id)}
+            onClick={() => openForm(selectedActivity.id)}
             content="Edit"
           />
           <Button.Or />
-          <Button onClick={cancelSelectActivity} content="Cancel" />
+          <Button onClick={cancelSelectedActivity} content="Cancel" />
         </Button.Group>
       </Card.Content>
     </Card>
   );
 }
 
-export default ActivityDetails;
+export default observer(ActivityDetails);

@@ -9,7 +9,7 @@ interface Props {
 function LoadingComponent({ inverted = true, content = "Loading..." }: Props) {
   return (
     <Dimmer active={true} inverted={inverted}>
-      <Loader content={content} size="huge" />
+      <Loader content={content} />
     </Dimmer>
   );
 }
