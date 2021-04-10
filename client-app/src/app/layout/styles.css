@@ -46,4 +46,8 @@ body {
   font-weight: normal;
 }
 
+.ui.message .list:not(.ui) li {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 /*end home page styles*/
